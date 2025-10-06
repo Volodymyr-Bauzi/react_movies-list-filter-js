@@ -5,21 +5,22 @@ import './App.scss';
 
 export const App = () => {
   const [visibleMovies, setVisibleItems] = useState(moviesFromServer);
-  const [value, setValue] = useState('');
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
-    if (value.length >= 2) {
+    if (query.trim().length >= 2) {
+      const normalizedQuery = query.trim().toLowerCase();
       const filtered = moviesFromServer.filter(
         movie =>
-          movie.title.toLowerCase().includes(value.trim().toLowerCase()) ||
-          movie.description.toLowerCase().includes(value.trim().toLowerCase()),
+          movie.title.toLowerCase().includes(normalizedQuery) ||
+          movie.description.toLowerCase().includes(normalizedQuery),
       );
 
       setVisibleItems(filtered);
     } else {
       setVisibleItems(moviesFromServer);
     }
-  }, [value, moviesFromServer]);
+  }, [query, moviesFromServer]);
 
   return (
     <div className="page">
@@ -37,8 +38,8 @@ export const App = () => {
                 id="search-query"
                 className="input"
                 placeholder="Type search word"
-                value={value}
-                onChange={e => setValue(e.target.value)}
+                value={query}
+                onChange={event => setQuery(event.target.query)}
               />
             </div>
           </div>
