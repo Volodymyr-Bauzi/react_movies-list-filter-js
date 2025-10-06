@@ -8,8 +8,9 @@ export const App = () => {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
-    if (query.trim().length >= 2) {
-      const normalizedQuery = query.trim().toLowerCase();
+    const normalizedQuery = query.trim().toLowerCase();
+
+    if (normalizedQuery.length) {
       const filtered = moviesFromServer.filter(
         movie =>
           movie.title.toLowerCase().includes(normalizedQuery) ||
